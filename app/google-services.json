@@ -29,7 +29,7 @@
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBsgpcIKLVSHedzE4LxgmZyYXi6IK4KcMQ"
+          "current_key": "$FILM_TRACKER_GOOGLE_API_KEY"
         }
       ],
       "services": {

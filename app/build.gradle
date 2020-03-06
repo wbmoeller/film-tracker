@@ -3,9 +3,26 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.google.gms.google-services'
 
+class UpdateGoogleServicesApiKey extends DefaultTask {
+    @TaskAction
+    def update() {
+        def envVar = "FILM_TRACKER_GOOGLE_API_KEY"
+        def key = System.getenv(envVar)
+
+        // todo - this does fine updating the google-services.json, but it leaves it changed (which opens me up to re-committing the key)
+        //    so how do i revert the change after building?
+        if (key) {
+            ant.replace(file: 'google-services.json', token: '$FILM_TRACKER_GOOGLE_API_KEY', value: key)
+        } else {
+            logger.log(LogLevel.ERROR, "You must use $envVar for firebase services")
+        }
+    }
+}
+
 android {
     compileSdkVersion 29
 
+    task updateGoogleServicesConfiguration(type: UpdateGoogleServicesApiKey) {}
 
     defaultConfig {
         applicationId "com.wbmoeller.filmtracker"
@@ -38,6 +55,15 @@ android {
 
     viewBinding {
         enabled = true
+    }
+
+    project.afterEvaluate {
+        project.tasks.findAll {
+            it.name.startsWith("generate") && it.name.endsWith("BuildConfig")
+        }.forEach({
+            logger.log(LogLevel.WARN, "Configuring google services for task: $it")
+            it.dependsOn updateGoogleServicesConfiguration
+        })
     }
 }
 
