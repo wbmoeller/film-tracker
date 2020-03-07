@@ -5,6 +5,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
+import android.view.MenuItem
+import androidx.appcompat.app.ActionBarDrawerToggle
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import androidx.navigation.findNavController
@@ -38,20 +40,7 @@ class MainActivity : AppCompatActivity() {
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                     .setAction("Action") {
-                        Log.d("MainActivity", "current user was null, showing auth")
-                        val providers = arrayListOf(
-//                            AuthUI.IdpConfig.GoogleBuilder().build(),
-//                            AuthUI.IdpConfig.PhoneBuilder().build())
-                            AuthUI.IdpConfig.EmailBuilder().build())
-
-                        startActivityForResult(
-                            AuthUI.getInstance()
-                                .createSignInIntentBuilder()
-                                .setAvailableProviders(providers)
-                                .build(),
-                            AUTH_REQUEST_CODE
-                        )
-
+                        signIn()
                     }.show()
         }
         val navController = findNavController(R.id.nav_host_fragment)
@@ -61,6 +50,17 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow), binding.drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         binding.navView.setupWithNavController(navController)
+        // this breaks the fragment handling
+//        binding.navView.setNavigationItemSelectedListener { item ->
+//            if (item.itemId == R.id.signout) {
+//                Log.d("MainActivity", "Signing out")
+//                signOut()
+//                signIn()
+//                true
+//            } else {
+//                false
+//            }
+//        }
     }
 
     override fun onStart() {
@@ -68,6 +68,8 @@ class MainActivity : AppCompatActivity() {
         // Check if user is signed in (non-null) and update UI accordingly.
         val currentUser = auth.currentUser
         if (currentUser == null) {
+            // todo - not working
+            //signIn()
         }
     }
 
@@ -102,6 +104,22 @@ class MainActivity : AppCompatActivity() {
                 // ...
             }
         }
+    }
+
+    fun signIn() {
+        Log.d("MainActivity", "current user was null, showing auth")
+        val providers = arrayListOf(
+//                            AuthUI.IdpConfig.GoogleBuilder().build(),
+//                            AuthUI.IdpConfig.PhoneBuilder().build())
+            AuthUI.IdpConfig.EmailBuilder().build())
+
+        startActivityForResult(
+            AuthUI.getInstance()
+                .createSignInIntentBuilder()
+                .setAvailableProviders(providers)
+                .build(),
+            AUTH_REQUEST_CODE
+        )
     }
 
     fun signOut() {
