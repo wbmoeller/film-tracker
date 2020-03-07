@@ -12,7 +12,7 @@ class UpdateGoogleServicesApiKey extends DefaultTask {
         // todo - this does fine updating the google-services.json, but it leaves it changed (which opens me up to re-committing the key)
         //    so how do i revert the change after building?
         if (key) {
-            ant.replace(file: 'google-services.json', token: '$FILM_TRACKER_GOOGLE_API_KEY', value: key)
+//            ant.replace(file: 'google-services.json', token: '$FILM_TRACKER_GOOGLE_API_KEY', value: key)
         } else {
             logger.log(LogLevel.ERROR, "You must use $envVar for firebase services")
         }

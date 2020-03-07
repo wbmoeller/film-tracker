@@ -8,20 +8,12 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:326448013909:android:20e0f19b8ca3db3eea2adc",
+        "mobilesdk_app_id": "1:326448013909:android:0f195aa6457b32a3ea2adc",
         "android_client_info": {
           "package_name": "com.wbmoeller.filmtracker"
         }
       },
       "oauth_client": [
-        {
-          "client_id": "326448013909-ufke71ctkcohg6h07pvpf9d4ej7410aa.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.wbmoeller.filmtracker",
-            "certificate_hash": "88898d4080a16cbc8f5443a2c4d667b0aa6a0f16"
-          }
-        },
         {
           "client_id": "326448013909-lbem61p2vvgjnp4jdmdrl8e6r518ngkh.apps.googleusercontent.com",
           "client_type": 3
