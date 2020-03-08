@@ -19,11 +19,29 @@ class CamerasFragment : Fragment() {
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        camerasViewModel = ViewModelProvider(this).get(CamerasViewModel::class.java)
+        val app = activity?.application
+        app?.let {
+            camerasViewModel = ViewModelProvider(
+                this,
+                CamerasViewModel.Factory(it)
+            ).get(CamerasViewModel::class.java)
+        }
         binding = FragmentCamerasBinding.inflate(layoutInflater, container, false)
-        camerasViewModel.text.observe(viewLifecycleOwner, Observer {
-            binding.textHome.text = it
+
+        camerasViewModel.cameras.observe(viewLifecycleOwner, Observer {
+            when {
+                it.isSuccess -> {
+                    binding.textHome.text = "CamerasFragment loaded ${it.getOrDefault(listOf()).size}"
+                }
+                it.isFailure -> {
+                    binding.textHome.text = it.exceptionOrNull()?.message
+                }
+            }
         })
+
+        camerasViewModel.loadCameras()
+
+        // todo - it's like i never actually get the value of the loaded cameras...
         return binding.root
     }
 }
