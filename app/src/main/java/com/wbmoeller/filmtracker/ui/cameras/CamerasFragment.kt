@@ -1,5 +1,6 @@
 package com.wbmoeller.filmtracker.ui.cameras
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,7 +8,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.wbmoeller.filmtracker.databinding.FragmentCamerasBinding
+
 
 class CamerasFragment : Fragment() {
 
@@ -27,14 +30,16 @@ class CamerasFragment : Fragment() {
             ).get(CamerasViewModel::class.java)
         }
         binding = FragmentCamerasBinding.inflate(layoutInflater, container, false)
+        binding.camerasList.layoutManager = LinearLayoutManager(context)
 
         camerasViewModel.cameras.observe(viewLifecycleOwner, Observer {
             when {
                 it.isSuccess -> {
-                    binding.textHome.text = "CamerasFragment loaded ${it.getOrDefault(listOf()).size}"
+                    val recyclerViewAdapter = CameraRecyclerViewAdapter(activity as Activity, it.getOrDefault(listOf()))
+                    binding.camerasList.adapter = recyclerViewAdapter
                 }
                 it.isFailure -> {
-                    binding.textHome.text = it.exceptionOrNull()?.message
+                    // todo - show an error
                 }
             }
         })

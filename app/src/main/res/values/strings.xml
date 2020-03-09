@@ -15,4 +15,8 @@
     <string name="signout">Sign Out</string>
 
     <string name="nav_drawer_bottom_section">Other</string>
+    <string name="camera_thumbnail">Camera Thumbnail</string>
+    <string name="aperture_label">f</string>
+    <string name="film_state_empty">Empty</string>
+    <string name="film_state_loaded">Loaded</string>
 </resources>

@@ -46,10 +46,13 @@ class CameraRepository {
             emit(cameraList)
 
             // Load the film a bit later
-            delay(2000)
+            delay(1000)
             cameraList[2].load(Film("Ilford", "HP5", FilmFormat.OneTwenty, 200, FilmColor.BlackAndWhite))
-            cameraList[1].load(Film("Fujifilm", "Velvia", FilmFormat.ThirtyFive, 100, FilmColor.Daylight))
+            emit(cameraList)
 
+            delay(1000)
+            cameraList[1].load(Film("Fujifilm", "Velvia", FilmFormat.ThirtyFive, 100, FilmColor.Daylight))
+            emit(cameraList)
         }.flowOn(Dispatchers.IO) // Use the IO thread for this Flow
     }
 }

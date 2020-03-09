@@ -30,6 +30,7 @@ class CamerasViewModel @ExperimentalCoroutinesApi constructor(
                 .collect { cameraItems ->
                     _cameras.value = Result.success(cameraItems)
                 }
+            // todo - can't seem to get .asLiveData() to be recognized
         }
     }
 

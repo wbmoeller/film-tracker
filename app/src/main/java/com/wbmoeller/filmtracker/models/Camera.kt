@@ -20,12 +20,13 @@ class Camera(
     val otherLinks: List<URI>? = null,
     val notes: String? = null
 ) {
-    private var loadedRoll: Roll? = null
+    private var _loadedRoll: Roll? = null
+    val loadedRoll get() = _loadedRoll
 
     fun load(film: Film): Roll? {
         return if (film.format == filmFormat) {
             val newRoll = Roll(film, this)
-            loadedRoll = newRoll
+            _loadedRoll = newRoll
             newRoll
         } else {
             // error!
@@ -34,8 +35,8 @@ class Camera(
     }
 
     fun unload(): Roll? {
-        loadedRoll?.state = Roll.State.Used
-        loadedRoll = null
-        return loadedRoll
+        _loadedRoll?.state = Roll.State.Used
+        _loadedRoll = null
+        return _loadedRoll
     }
 }
